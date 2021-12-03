@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nattia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 15:09:01 by nattia            #+#    #+#             */
-/*   Updated: 2021/12/03 15:09:04 by nattia           ###   ########.fr       */
+/*   Created: 2021/12/03 14:59:35 by nattia            #+#    #+#             */
+/*   Updated: 2021/12/03 15:02:19 by nattia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t ft_strlen(const char *s)
 {
@@ -18,7 +18,7 @@ size_t ft_strlen(const char *s)
 
     i = 0;
     if (!s)
-        return (0); 
+        return (0);
     while (s[i])
     {
         i++;

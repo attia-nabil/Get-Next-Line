@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nattia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 15:08:24 by nattia            #+#    #+#             */
-/*   Updated: 2021/12/03 15:08:28 by nattia           ###   ########.fr       */
+/*   Created: 2021/12/03 14:51:15 by nattia            #+#    #+#             */
+/*   Updated: 2021/12/03 15:07:23 by nattia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char    *ln_dump(char *r)
 {
@@ -60,7 +60,7 @@ char    *update_rec(char *r)
     return (u);
 }
 
-char    *get_next_line(int fd)
+char    *get_next_line_bonus(int fd)
 {
     char        *buf;
     char        *rtn;
@@ -89,15 +89,3 @@ char    *get_next_line(int fd)
     rec = update_rec(rec);
     return (rtn);
 }
-
-// #include <stdio.h>
-// #include <fcntl.h>
-
-
-// int main(void)
-// {
-//     int fd;
-//     fd = open("../test.txt", O_RDONLY);
-//     printf("%s\n" , get_next_line(fd));
-//     return (0);
-// }
