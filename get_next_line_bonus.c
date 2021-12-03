@@ -12,80 +12,83 @@
 
 #include "get_next_line_bonus.h"
 
-char    *ln_dump(char *r)
+static char	*l_dump(char *s)
 {
-    char    *d;
-    int     i;
+	char	*d;
+	int		i;
 
-    if (!r[0])
-        return (NULL);
-    i = 0;
-    while (r[i] && r[i] != '\n')
-        i++;
-    d = malloc(i + 2);
-    if (!d)
-        return (NULL);
-    i = -1;
-    while (r[++i] && r[i] != '\n')
-        d[i] = r[i];
-    if (r[i] == '\n')
-        d[i++] = '\n';
-    d[i] = '\0';
-    return (d);
+	if (!*s)
+		return (NULL);
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	d = (char *)malloc(i + 2);
+	i = -1;
+	while (s[++i] && s[i] != '\n')
+		d[i] = s[i];
+	if (s[i] == '\n')
+		d[i++] = '\n';
+	d[i] = '\0';
+	return (d);
 }
 
-char    *update_rec(char *r)
+static char	*g_save(char *s)
 {
-    char    *u;
-    int     i;
-    int     j;
+	char	*sv;
+	int		i;
+	int		j;
 
-    i = 0;
-    while (r[i] && r[i] != '\n')
-        i++;
-    if (!r[i])
-    {
-        free(r);
-        return (NULL);
-    }
-    u = malloc(ft_strlen(r) - i + 1);
-    if (!u)
-        return (NULL);
-    i++;
-    j = 0;
-    while (r[i])
-        u[j++] = r[i++];
-    u[j] = '\0';
-    free(r);
-    return (u);
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	if (!*(s + i))
+	{
+		free(s);
+		return (NULL);
+	}
+	sv = (char *)malloc(ft_strlen(s) - i + 1);
+	if (!sv)
+		return (NULL);
+	i++;
+	j = 0;
+	while (s[i])
+		sv[j++] = s[i++];
+	sv[j] = '\0';
+	free(s);
+	return (sv);
 }
 
-char    *get_next_line_bonus(int fd)
+static int	buf_alloc(char **buf)
 {
-    char        *buf;
-    char        *rtn;
-    static char *rec;
-    int         rdr;
+	*buf = (char *)malloc(BUFFER_SIZE + 1);
+	if (!*buf)
+		return (0);
+	return (1);
+}
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    buf = malloc(BUFFER_SIZE + 1);
-    if (!buf)
-        return (NULL);
-    rdr = 1;
-    while (!has_nl(rec) && rdr)
-    {
-        rdr = read(fd, buf, BUFFER_SIZE);
-        if (rdr == -1)
-        {
-            free(buf);
-            return (NULL);
-        }
-        buf[rdr] = '\0';
-        rec = ft_strjoin(rec, buf);
-    }
-    free(buf);
-    rtn = ln_dump(rec);
-    rec = update_rec(rec);
-    return (rtn);
+char	*get_next_line(int fd)
+{
+	static char	*sv[256];
+	char		*rtn;
+	char		*buf;
+	int			rdr;
+
+	if (fd < 0 || fd > 256 || BUFFER_SIZE <= 0 || !buf_alloc(&buf))
+		return (NULL);
+	rdr = 1;
+	while (!nl_found(sv[fd]) && rdr)
+	{
+		rdr = read(fd, buf, BUFFER_SIZE);
+		if (rdr == -1)
+		{
+			free(buf);
+			return (0);
+		}
+		buf[rdr] = '\0';
+		sv[fd] = ft_strjoin(sv[fd], buf);
+	}
+	free(buf);
+	rtn = l_dump(sv[fd]);
+	sv[fd] = g_save(sv[fd]);
+	return (rtn);
 }

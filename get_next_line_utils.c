@@ -12,67 +12,50 @@
 
 #include "get_next_line.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-    int i;
+	size_t	len;
 
-    i = 0;
-    if (!s)
-        return (0); 
-    while (s[i])
-    {
-        i++;
-    }
-    return (i);
+	len = 0;
+	while (s && s[len])
+		len++;
+	return (len);
 }
 
-int has_nl(const char *s)
+int	nl_found(const char *s)
 {
-    int i;
-
-    i = 0;
-    if (!s)
-        return (0);
-    while(s[i])
-    {
-        if (s[i] == '\n')
-            return (1);
-        i++;
-    }
-    return (0);
+	while (s && *s)
+	{
+		if (*s == '\n')
+			return (1);
+		s++;
+	}
+	return (0);
 }
 
-char    *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-    int i;
-    int j;
-    int k;
-    char *ptr;
+	char	*rtn;
+	int		l;
+	int		i;
+	int		j;
 
-    if (!s1)
-    {
-        s1 = malloc(1);
-        s1[0] = '\0';
-    }
-
-    i = 0;
-    j = 0;
-    k = ft_strlen(s2) + ft_strlen(s1);
-
-    ptr = malloc(k + 1);
-    if(!ptr)
-        return (NULL);
-    while(s1[i])
-    {
-        ptr[i] = s1[i];
-        i++;
-    }
-    while(s2[j])
-    {
-        ptr[i + j] = s2[j];
-        j++;
-    }
-    ptr[k] = '\0';
-    free(s1);
-    return (ptr);
+	if (!s1)
+	{
+		s1 = (char *)malloc(1);
+		*s1 = '\0';
+	}
+	l = ft_strlen(s1) + ft_strlen(s2);
+	rtn = (char *)malloc(l + 1);
+	if (!rtn)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		rtn[i] = s1[i];
+	j = -1;
+	while (i < l)
+		rtn[i++] = s2[++j];
+	rtn[l] = '\0';
+	free(s1);
+	return (rtn);
 }
